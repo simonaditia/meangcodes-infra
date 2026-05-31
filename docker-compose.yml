@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  meangcodes-backend:
+    build:
+      context: ../meangcodes-backend  # Mundur 1 folder, lalu masuk ke folder backend
+      dockerfile: Dockerfile
+    container_name: meangcodes-backend
+    ports:
+      - "3602:3602"
+    volumes:
+      - ../meangcodes-backend/.env:/app/.env # Jalurnya disesuaikan mundur juga
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    restart: unless-stopped
+
+  meangcodes-frontend:
+    build:
+      context: ../meangcodes-frontend # Mundur 1 folder, lalu masuk ke folder frontend
+      dockerfile: Dockerfile
+    container_name: web-frontend
+    ports:
+      - "4009:80"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped
